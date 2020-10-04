@@ -6,7 +6,7 @@ ENV VSTS_AGENT_DIR=/opt/vstsagent
 
 ## Configure tzdata package in advance
 COPY etc/timezone /etc
-RUN ln -s /usr/share/zoneinfo/Etc/UTC /etc/localtime
+RUN ln -s /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
 
 RUN apt-get update && apt-get install -y \
     tzdata \
@@ -16,12 +16,12 @@ RUN apt-get update && apt-get install -y \
     jq \
     zip \
     git \
-    nodejs \
     && rm -rf /var/lib/apt/lists/*
 
 COPY etc/apt /etc/apt
 
 RUN apt-get update && apt-get install -y \
+    nodejs \
     azure-cli \
     dotnet-sdk-${DOTNET_SDK_VERSION} \
     && rm -rf /var/lib/apt/lists/*
@@ -33,4 +33,4 @@ COPY docker-entrypoint.sh /usr/local/bin
 
 ENTRYPOINT [ "docker-entrypoint.sh" ]
 
-CMD [ "${VSTS_AGENT_DIR}/run.sh", "--once" ]
+CMD [ "${VSTS_AGENT_DIR}/run.sh" ]
