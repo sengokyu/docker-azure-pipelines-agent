@@ -33,4 +33,6 @@ COPY docker-entrypoint.sh /usr/local/bin
 
 ENTRYPOINT [ "docker-entrypoint.sh" ]
 
-CMD [ "${VSTS_AGENT_DIR}/run.sh", "--once" ]
+## So, CMD does not support variables substitution.
+## Use a immidiate file path.
+CMD [ "/opt/vstsagent/run.sh", "--once" ]
