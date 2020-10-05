@@ -1,6 +1,14 @@
 # Docker container image for Azure Pipelines Agent
 
-# Getting Started with Azure Container Instance
+# Getting Started 
+
+## With Docker
+
+```
+docker run -d -e TOKEN=YourPersonalAccessToken -e ORG=YourOrganizationName sengokyu/azure-pipelines-agent
+```
+
+## With Azure Container Instance
 
 ```
 az container create -g YourResourceGroup --name YourInstanceName --image sengokyu/azure-pipelines-agent --cpu 2 --memory 2 --environment-variables TOKEN=YourPersonalAccessToken ORG=YourOrganizationName
