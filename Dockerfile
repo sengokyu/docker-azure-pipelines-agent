@@ -26,11 +26,11 @@ RUN apt-get update && apt-get install -y \
     dotnet-sdk-${DOTNET_SDK_VERSION} \
     && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir /opt/vstsagent \
+RUN mkdir ${VSTS_AGENT_DIR} \
     && curl -sL https://vstsagentpackage.azureedge.net/agent/${VSTS_AGENT_VERSION}/vsts-agent-linux-x64-${VSTS_AGENT_VERSION}.tar.gz | tar zxf - -C ${VSTS_AGENT_DIR}
 
 COPY docker-entrypoint.sh /usr/local/bin
 
 ENTRYPOINT [ "docker-entrypoint.sh" ]
 
-CMD [ "${VSTS_AGENT_DIR}/run.sh" ]
+CMD [ "${VSTS_AGENT_DIR}/run.sh", "--once" ]
