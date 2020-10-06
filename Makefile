@@ -12,5 +12,10 @@ shell:
 clean:
 	docker rmi $(image_tag)
 
-create:
-	az container create -g $(RG) --name azure-pipelines-agent --image $(image_tag) --cpu 2 --memory 2 --environment-variables TOKEN=$(TOKEN) ORG=$(ORG)
+deploy:
+	az deployment group create \
+		-g $(RG) \
+		-p token=$(TOKEN) \
+		-p org=$(ORG) \
+		-f deploy-aci.json
+

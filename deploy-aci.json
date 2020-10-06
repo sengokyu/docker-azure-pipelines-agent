@@ -1,0 +1,60 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "containerGroupName": {
+      "type": "string",
+      "defaultValue": "azure-pipelines-agent-group",
+      "metadata": { "description": "Container Group name." }
+    },
+    "token": {
+      "type": "string",
+      "metadata": { "description": "personal access token" }
+    },
+    "org": {
+      "type": "string",
+      "metadata": { "description": "name of organization" }
+    }
+  },
+  "variables": {
+    "containerImage": "sengokyu/azure-pipelines-agent:latest"
+  },
+  "resources": [
+    {
+      "name": "[parameters('containerGroupName')]",
+      "type": "Microsoft.ContainerInstance/containerGroups",
+      "apiVersion": "2018-10-01",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "containers": [
+          {
+            "name": "linux-agent-1",
+            "properties": {
+              "image": "[variables('containerImage')]",
+              "resources": { "requests": { "cpu": 2, "memoryInGb": 5 } },
+              "environmentVariables": [
+                { "name": "TOKEN", "secureValue": "[parameters('token')]" },
+                { "name": "ORG", "value": "[parameters('org')]" },
+                { "name": "AGENT", "value": "linux-agent-1" }
+              ]
+            }
+          },
+          {
+            "name": "linux-agent-2",
+            "properties": {
+              "image": "[variables('containerImage')]",
+              "resources": { "requests": { "cpu": 2, "memoryInGb": 5 } },
+              "environmentVariables": [
+                { "name": "TOKEN", "secureValue": "[parameters('token')]" },
+                { "name": "ORG", "value": "[parameters('org')]" },
+                { "name": "AGENT", "value": "linux-agent-2" }
+              ]
+            }
+          }
+        ],
+        "osType": "Linux",
+        "restartPolicy": "Never"
+      }
+    }
+  ]
+}
