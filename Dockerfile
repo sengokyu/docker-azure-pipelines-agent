@@ -1,7 +1,7 @@
 FROM ubuntu:18.04
 
 ENV VSTS_AGENT_VERSION=2.174.3
-ENV DOTNET_SDK_VERSION=2.2
+ENV DOTNET_RUNTIME_VERSION=3.1
 ENV VSTS_AGENT_DIR=/opt/vstsagent
 
 ## Configure tzdata package in advance
@@ -21,9 +21,8 @@ RUN apt-get update && apt-get install -y \
 COPY etc/apt /etc/apt
 
 RUN apt-get update && apt-get install -y \
-    nodejs \
     azure-cli \
-    dotnet-sdk-${DOTNET_SDK_VERSION} \
+    dotnet-runtime-${DOTNET_RUNTIME_VERSION} \
     && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir ${VSTS_AGENT_DIR} \
@@ -35,4 +34,6 @@ ENTRYPOINT [ "docker-entrypoint.sh" ]
 
 ## So, CMD does not support variables substitution.
 ## Use a immidiate file path.
-CMD [ "/opt/vstsagent/run.sh", "--once" ]
+##
+## --once option indicate stop process by a job.
+CMD [ "/opt/vstsagent/run.sh" ]

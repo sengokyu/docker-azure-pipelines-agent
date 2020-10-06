@@ -21,3 +21,14 @@ az container create -g YourResourceGroup --name YourInstanceName --image sengoky
 * AGENT (optional) Agent name. Default: "ubuntu-agent"
 * POOL (optional) Pool name. Default: "Default"
 
+# Installed packages
+
+* tzdata
+* ca-certificates
+* build-essential
+* curl
+* jq
+* zip
+* git
+* azure-cli
+* dotnet-runtime-3.1
