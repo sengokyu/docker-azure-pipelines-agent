@@ -4,7 +4,7 @@
   "parameters": {
     "containerGroupName": {
       "type": "string",
-      "defaultValue": "azure-pipelines-agent-group",
+      "defaultValue": "pipelines-agent",
       "metadata": { "description": "Container Group name." }
     },
     "token": {
@@ -23,31 +23,37 @@
     {
       "name": "[parameters('containerGroupName')]",
       "type": "Microsoft.ContainerInstance/containerGroups",
-      "apiVersion": "2018-10-01",
+      "apiVersion": "2019-12-01",
       "location": "[resourceGroup().location]",
       "properties": {
         "containers": [
           {
-            "name": "linux-agent-1",
+            "name": "[concat(parameters('containerGroupName'), '-1')]",
             "properties": {
               "image": "[variables('containerImage')]",
-              "resources": { "requests": { "cpu": 2, "memoryInGb": 5 } },
+              "resources": {
+                "requests": { "cpu": 2, "memoryInGb": 4 },
+                "limits": { "cpu": 4, "memoryInGb": 8 }
+              },
               "environmentVariables": [
                 { "name": "TOKEN", "secureValue": "[parameters('token')]" },
                 { "name": "ORG", "value": "[parameters('org')]" },
-                { "name": "AGENT", "value": "linux-agent-1" }
+                { "name": "AGENT", "value": "[concat(parameters('containerGroupName'), '-1')]" }
               ]
             }
           },
           {
-            "name": "linux-agent-2",
+            "name": "[concat(parameters('containerGroupName'), '-2')]",
             "properties": {
               "image": "[variables('containerImage')]",
-              "resources": { "requests": { "cpu": 2, "memoryInGb": 5 } },
+              "resources": {
+                "requests": { "cpu": 2, "memoryInGb": 4 },
+                "limits": { "cpu": 4, "memoryInGb": 8 }
+              },
               "environmentVariables": [
                 { "name": "TOKEN", "secureValue": "[parameters('token')]" },
                 { "name": "ORG", "value": "[parameters('org')]" },
-                { "name": "AGENT", "value": "linux-agent-2" }
+                { "name": "AGENT", "value": "[concat(parameters('containerGroupName'), '-2')]" }
               ]
             }
           }
