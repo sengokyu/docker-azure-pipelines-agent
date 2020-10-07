@@ -3,16 +3,16 @@ image_tag=sengokyu/azure-pipelines-agent:latest
 build:
 	docker build -t $(image_tag) --force-rm .
 
-push:
-	docker push $(image_tag)
-
 shell:
 	docker run -it --rm -e TOKEN=$(TOKEN) -e ORG=$(ORG) $(image_tag) /bin/bash
+
+run:
+	docker run -it --rm -e TOKEN=$(TOKEN) -e ORG=$(ORG) $(image_tag)
 
 clean:
 	docker rmi $(image_tag)
 
-deploy:
+deploy-aci:
 	az deployment group create \
 		-g $(RG) \
 		-p token=$(TOKEN) \
