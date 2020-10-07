@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  linux_agent_1:
+    image: sengokyu/azure-pipelines-agent:latest
+    environment:
+      - TOKEN=YourPersonalAccessToken
+      - ORG=YourOragnizationName
+      - AGENT=linux-agent-1
+      - POOL=Default
+  linux_agent_2:
+    image: sengokyu/azure-pipelines-agent:latest
+    environment:
+      - TOKEN=YourPersonalAccessToken
+      - ORG=YourOragnizationName
+      - AGENT=linux-agent-2
+      - POOL=Default
