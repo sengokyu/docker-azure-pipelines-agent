@@ -2,3 +2,4 @@ LICENSE
 Makefile
 README.*
 deploy-aci.yml
+docker-compose.*
