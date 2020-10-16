@@ -1,7 +1,5 @@
-FROM ubuntu:18.04
+FROM mcr.microsoft.com/dotnet/core/runtime:3.1-bionic
 
-ENV VSTS_AGENT_VERSION=2.175.2
-ENV DOTNET_RUNTIME_VERSION=3.1
 ENV VSTS_AGENT_DIR=/opt/vstsagent
 
 ## Configure tzdata package in advance
@@ -18,11 +16,11 @@ RUN apt-get update && apt-get install -y \
     git \
     && rm -rf /var/lib/apt/lists/*
 
+## We need ca-certificates before installing this package.
+##
 COPY etc/apt /etc/apt
-
 RUN apt-get update && apt-get install -y \
     azure-cli \
-    dotnet-runtime-${DOTNET_RUNTIME_VERSION} \
     && rm -rf /var/lib/apt/lists/*
 
 COPY bin /usr/local/bin
