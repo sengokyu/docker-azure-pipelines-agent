@@ -17,6 +17,10 @@ fi
 
 export AGENT_ALLOW_RUNASROOT=yes
 
+if [ -z "$AGENT"]; then
+    AGENT=$(hostname)-agent
+fi
+
 cd ${VSTS_AGENT_DIR}
 
 ./config.sh \
@@ -25,7 +29,7 @@ cd ${VSTS_AGENT_DIR}
     --auth pat \
     --token "${TOKEN}" \
     --pool "${POOL:-Default}" \
-    --agent "${AGENT:-ubuntu-agent}" \
+    --agent "${AGENT:-agent-$(hostname)}" \
     --replace \
     acceptTeeEula
 

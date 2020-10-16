@@ -25,10 +25,9 @@ RUN apt-get update && apt-get install -y \
     dotnet-runtime-${DOTNET_RUNTIME_VERSION} \
     && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir ${VSTS_AGENT_DIR} \
-    && curl -sL https://vstsagentpackage.azureedge.net/agent/${VSTS_AGENT_VERSION}/vsts-agent-linux-x64-${VSTS_AGENT_VERSION}.tar.gz | tar zxf - -C ${VSTS_AGENT_DIR}
+COPY bin /usr/local/bin
 
-COPY docker-entrypoint.sh /usr/local/bin
+RUN download-vsts-agent.sh
 
 ENTRYPOINT [ "docker-entrypoint.sh" ]
 
