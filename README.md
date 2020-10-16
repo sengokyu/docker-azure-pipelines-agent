@@ -18,10 +18,17 @@ az container create -g YourResourceGroup --name YourInstanceName --image sengoky
 
 * URL or ORG (required) URL of the server or the organization name of Azure DevOps.
 * TOKEN (required) Your Personal Access Token.
-* AGENT (optional) Agent name. Default: "ubuntu-agent"
+* AGENT (optional) Agent name. Default: "agent-$(hostname)"
 * POOL (optional) Pool name. Default: "Default"
 
-# Installed packages
+
+# About the container itself
+
+## Base image
+
+mcr.microsoft.com/dotnet/core/runtime:3.1-bionic
+
+## Installed packages
 
 * tzdata
 * ca-certificates
@@ -31,4 +38,3 @@ az container create -g YourResourceGroup --name YourInstanceName --image sengoky
 * zip
 * git
 * azure-cli
-* dotnet-runtime-3.1
