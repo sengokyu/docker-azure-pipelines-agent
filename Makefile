@@ -15,7 +15,6 @@ clean:
 deploy-aci:
 	az deployment group create \
 		-g $(RG) \
-		-p token=$(TOKEN) \
-		-p org=$(ORG) \
-		-f deploy-aci.json
+		-p @azure-template/parameters.json \
+		-f azure-template/template.json
 

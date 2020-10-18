@@ -1,5 +1,5 @@
 LICENSE
 Makefile
 README.*
-deploy-aci.yml
+azure-template/*
 docker-compose.*
